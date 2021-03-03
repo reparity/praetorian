@@ -1,0 +1,35 @@
+<div class="form">
+    <form action="requestconfirm.php" target="_blank" method="post">
+        <fieldset>
+            <legend>General Information</legend>
+            <table>
+            
+            <tr>
+            <td><label for="name">Full Name:</label></td>
+            <td><input type="text" name="name" maxlength="50"></td>
+            </tr>
+            
+            <tr>
+            <td><label for="email">Email:</label></td>
+            <td><input type="email" name="email" maxlength="50"></td>
+            </tr>
+    
+            <tr>
+            <td><label for="category">Category:</label></td>
+    
+            <td><select name="category" size="1">
+            <option>On-site</option>
+            <option>Off-site/Remote</option>
+            </select></td>
+            </tr>
+            <tr>
+            <td><label for="description">Additional Details:</label></td>
+            <td><textarea name="description" rows="10" cols="30" maxlength="300"></textarea></td>
+            </tr>
+    
+            </table>
+        </fieldset>
+        
+        <input type="submit" value="SUBMIT">	
+    
+    </form>
