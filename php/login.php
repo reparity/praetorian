@@ -1,24 +1,29 @@
 <?php
+	$servername="localhost";
+	$username="root";
+	$password="";
+	$dbName="praetorian";
 
-include_once("database.php");
-$postdata = file_get_contents("php://input");
-$request = json_decode($postdata);
-if(isset($postdata) && !empty($postdata)) {
+$conn = new mysqli($servername, $username, $password, $dbName);
 
-    $pwd = mysqli_real_escape_string($mysqli, trim($request->password));
-    $username = mysqli_real_escape_string($mysqli, trim($request->username));
-    $sql = "SELECT * FROM admin WHERE pass='$pwd' and username='$username'";
-    if($result = mysqli_query($mysqli,$sql)) {
-
-        $rows = array();
-        while($row = mysqli_fetch_assoc($result)) {
-            $rows[] = $row;
-        }
-        echo json_encode($rows);
-    }
-    else {
-        http_response_code(404);
-    }
+if ($conn->connect_error) {
+die("Connection failed: " . $conn->connect_error);
 }
 
+$myusername=$_POST['username'];
+$mypassword=$_POST['password'];
+$sql = "SELECT username, pass FROM admin WHERE username='$myusername' and
+password='$mypassword'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0)
+{
+
+header("location:/home");
+}
+else
+{
+echo "<meta http-equiv=\"refresh\" content=\"0; url='/adminlogin'\" />";
+}
+$conn->close();
 ?>
