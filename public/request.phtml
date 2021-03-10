@@ -1,0 +1,87 @@
+<!DOCTYPE  html>
+<head>
+	<title>Rdein Lab</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="logo">
+	<h1>Rdein Laboratories</h1>
+	<img src="logo.png" height="187" width="300"></div>
+
+
+<ul class="nav">
+  	<li><a href="/">Home</a></li>
+  	<li><a href="#clients" class="active">Request</a></li> 
+	<li><a href="login">Staff Login</a></li>
+</ul>
+
+<div class="form">
+<form action="rdeinlabbookingconfirm.php" target="_blank" method="post">
+	<fieldset>
+		<legend>General Information</legend>
+		<table>
+		
+		<tr>
+		<td><label for="name">Full Name:</label></td>
+		<td><input type="text" name="name" maxlength="50"></td>
+		</tr>
+		
+		<tr>
+		<td><label for="email">Email:</label></td>
+		<td><input type="email" name="email" maxlength="50"></td>
+		</tr>
+
+		<tr>
+		<td><label for="date">Date of Booking:</label></td>
+		<td><input type="date" name="date"></td>
+		</tr>
+
+		</table>
+	</fieldset>
+
+	<fieldset>
+		<legend>Booking Details</legend>
+		<table>
+
+		<tr>
+		<td><label for="category">Category:</label></td>
+
+		<td><select name="category" size="1">
+		<option>Medical</option>
+		<option>Geosurveillance</option>
+		<option>Robotics</option>
+		<option>Artificial Intelligence</option>
+		<option>Network Topography</option>
+		</select></td>
+		</tr>
+		
+		<tr>
+		<td><label for="location">Location:</label></td>
+
+		<td><select name="location" size="1">
+		<option>Rhinelands</option>
+		<option>South Pole</option>
+		<option>Victoria</option>
+		<option>Rokkenjima</option>
+		<option>Rhodes Island</option>
+		</select></td>
+		</tr>
+
+		<tr>
+		<td><label for="details">Additional Details:</label></td>
+
+		<td><textarea name="details" rows="10" cols="30" maxlength="300"></textarea></td>
+
+		</tr>
+
+		</table>
+	</fieldset>
+	
+	<input type="submit" value="SUBMIT">	
+
+</form>
+</div>
+
+</body>
+</html>
