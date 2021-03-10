@@ -1,13 +1,67 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
 <head>
-  <meta charset="utf-8">
-  <title>ProjectPrae</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta charset="utf-8">
+    <title>Cust Front End Maifara</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+    <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body>
-  <app-root></app-root>
+  
+    <body id="top">
+
+		
+        <section id="banner" data-video="images/banner">
+            <div class="inner">
+                <header>
+                    <h1>Maifara Hotel</h1>
+                    <p>Maifara Hotel is located in the heart of Kuala Lumpur City Centre
+                         (KLCC) and offers the panoramic view of the Petronas Twin Towers, KLCC Park and the city's skyline. 
+                         It offers direct covered access to the Kuala Lumpur Convention Centre and is within walking distance 
+                         of Suria KLCC Shopping Mall, the Bukit Bintang shopping district and local tourist attractions, which 
+                         are all surrounded by restaurants, bars, clubs and cafes. and released under the Creative Commons License.</p>
+                </header>
+                <a href="#main" class="more">Learn More</a>
+
+                
+              <!--  <button class="btn btn-primary" ui-sref="add"><i class="fa fa-plus"></i> CLick here for register</button> -->
+                
+
+            </div>
+        </section>
+
+      
+    <!--
+<div class="container">
+    <h2 class="page-header text-center">Dear Customer,</h2>
+    <h1 class="page-header text-center">WELCOME TO maifara ONLINE SERVICE</h1>
+-->
+   
+   <div ui-view></div>
+    </div> 
+</div>
+
+
+
+<!-- main script -->
+<script src="js/app.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/jquery.poptrox.min.js"></script>
+<script src="assets/js/skel.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+<!-- controllers -->
+<script src="js/controllers/homeController.js"></script>
+<script src="js/controllers/addController.js"></script>
+<script src="js/controllers/editController.js"></script>
+<script src="js/controllers/deleteController.js"></script>
+<script src="js/controllers/chartController.js"></script>
+<script src="js/controllers/orderController.js"></script>
+<!-- services -->
+<script src="js/services/memberService.js"></script>
 </body>
 </html>
