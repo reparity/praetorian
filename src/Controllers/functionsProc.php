@@ -1,38 +1,36 @@
 <?php
 
-//get all products
-function getAllProducts($db) {
-    $sql = 'Select p.name, p.description, p.price, c.name as category from products p ';
-    $sql .= 'Inner Join categories c on p.category_id = c.id';
+//get all agents
+function getAllAgents($db) {
+    $sql = 'Select * FROM agents';
     $stmt = $db->prepare($sql);
     $stmt ->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-//get product by id
-function getProduct($db, $productId) {
-    $sql = 'Select p.name, p.description, p.price, c.name as category from products p ';
-    $sql .= 'Inner Join categories c on p.category_id = c.id ';
-    $sql .= 'Where p.id = :id';
+//get agent by id
+function getAgent($db, $agentId) {
+    $sql = 'Select * FROM agents ';
+    $sql .= 'Where id = :id';
     $stmt = $db->prepare ($sql);
-    $id = (int) $productId;
+    $id = (int) $agentId;
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-//add new product
-function createProduct($db, $form_data) {
-    $sql = 'Insert into products (name, description, price, category_id, created) ';
-    $sql .= 'values (:name, :description, :price, :category_id, :created)';
+//add new requestt
+function createRequest($db, $form_data) {
+    $sql = 'Insert into requests (name, email, category, description, date) ';
+    $sql .= 'values (:name, :email, :category, :description, :date)';
     $stmt = $db->prepare ($sql);
 
    // if(isset($form_data['price']) && isset($form_data['category_id'])) {
     $stmt->bindParam(':name', $form_data['name']);
+    $stmt->bindParam(':email', $form_data['email']);
+    $stmt->bindParam(':category', $form_data['category']);
     $stmt->bindParam(':description', $form_data['description']);
-    $stmt->bindParam(':price', floatval($form_data['price']));
-    $stmt->bindParam(':category_id', intval($form_data['category_id']));
-    $stmt->bindParam(':created', $form_data['created']);
+    $stmt->bindParam(':date', $form_data['date']);
     $stmt->execute();
     return $db->lastInsertID(); //insert last number, continue
    // }

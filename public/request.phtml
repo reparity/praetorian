@@ -17,7 +17,7 @@
 </ul>
 
 <div class="form">
-<form action="rdeinlabbookingconfirm.php" target="_blank" method="post">
+<form action="/request/add" target="_blank" method="post">
 	<fieldset>
 		<legend>General Information</legend>
 		<table>
@@ -30,11 +30,6 @@
 		<tr>
 		<td><label for="email">Email:</label></td>
 		<td><input type="email" name="email" maxlength="50"></td>
-		</tr>
-
-		<tr>
-		<td><label for="date">Date of Booking:</label></td>
-		<td><input type="date" name="date"></td>
 		</tr>
 
 		</table>
@@ -56,23 +51,17 @@
 		</select></td>
 		</tr>
 		
-		<tr>
-		<td><label for="location">Location:</label></td>
-
-		<td><select name="location" size="1">
-		<option>Rhinelands</option>
-		<option>South Pole</option>
-		<option>Victoria</option>
-		<option>Rokkenjima</option>
-		<option>Rhodes Island</option>
-		</select></td>
-		</tr>
 
 		<tr>
 		<td><label for="details">Additional Details:</label></td>
 
-		<td><textarea name="details" rows="10" cols="30" maxlength="300"></textarea></td>
+		<td><textarea name="description" rows="10" cols="30" maxlength="300"></textarea></td>
 
+		</tr>
+
+		<tr>
+		<td><label for="date">Date of Booking:</label></td>
+		<td><input type="date" name="date"></td>
 		</tr>
 
 		</table>

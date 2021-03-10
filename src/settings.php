@@ -13,7 +13,7 @@ return [
         //Database connection settings
         "db" => [
             "host" => "localhost",
-            "dbname" => "inventory_db",
+            "dbname" => "praetorian",
             "user" => "root",
             "pass" => "",
 

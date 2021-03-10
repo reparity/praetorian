@@ -3,38 +3,42 @@
 use Slim\Http\Request; //namespace
 use Slim\Http\Response; //namespace
 
-//include productProc.php file
-include __DIR__ . '/../Controllers/productProc.php';
+//include functionsProc.php file
+include __DIR__ . '/../Controllers/functionsProc.php';
 
-//read table products
-$app->get('/product/get', function (Request $request, Response $response, array $arg){
+//read table agents
+$app->get('/agent/get', function (Request $request, Response $response, array $arg){
     return $this->response->withJson(array('data' => 'success'), 200);
 });
 
-//request table products by condition
-$app->get('/product/[{id}]', function ($request, $response, $args){
+//request table agents by condition
+$app->get('/agent/[{id}]', function ($request, $response, $args){
 
-    $productId = $args['id'];
-    if (!is_numeric($productId)) {
+    $agentId = $args['id'];
+    if (!is_numeric($agentId)) {
         return $this->response->withJson(array('error' => 'numeric parameter required'), 422);
     }
-    $data = getProduct($this->db, $productId);
+    $data = getAgent($this->db, $agentId);
     if (empty($data)) {
         return $this->response->withJson(array('error' => 'no data'), 404);
     }
     return $this->response->withJson(array('data' => $data), 200);
 });
 
-//add product
-$app->post('/product/add', function ($request, $response, $args) {
+//add request
+$app->post('/request/add', function ($request, $response, $args) {
     $form_data = $request->getParsedBody();
     var_dump($form_data);
-    $data = createProduct($this->db, $form_data);
+    $data = createRequest($this->db, $form_data);
     if ($data <= 0) {
         return $this->response->withJson(array('error' => 'add data fail'), 500);
     }
     return $this->response->withJson(array('add data'=> 'success'), 201);
 });
+
+/** all code below is unedited
+ * do not use it
+ */
 
 //update product
 $app->put('/product/update/[{id}]', function ($request, $response, $args) {

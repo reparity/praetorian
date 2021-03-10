@@ -21,7 +21,7 @@ $container = $app->getContainer();
 $container['renderer'] = new PhpRenderer("./templates");
 
 $app->get('/', function (Request $request, Response $response){
-    return $this->renderer->render($response, "/../public/index.phtml");
+    return $this->renderer->render($response, "/../public/index.html");
 });
 
 //Run app

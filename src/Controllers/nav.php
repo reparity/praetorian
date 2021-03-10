@@ -8,7 +8,7 @@ $container = $app->getContainer();
 $container['renderer'] = new PhpRenderer("./templates");
 
 $app->get('/request', function (Request $request, Response $response){
-    return $this->renderer->render($response, "/request.phtml");
+    return $this->renderer->render($response, "/../public/request.phtml");
 });
 
 
