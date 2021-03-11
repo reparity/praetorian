@@ -1,2 +1,68 @@
-<h1>SUCC</h1>
+<!DOCTYPE html>
+<head>
+	<title>Rdein Lab</title>
+	<link rel="stylesheet" type="text/css" href="/../style.css" />
+</head>
+<body>
 
+<div class="header">
+	<h1>Rdein Laboratories</h1>
+	<img src="logo.png" height="187" width="300"></div>
+
+<div class="divider"></div>
+
+<h2>Booking Records</h2>
+
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "praetorian";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT ID, name, email, category, description, date FROM requests";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+
+	echo "<table><tr>";
+	echo "<th>ID</th> <th>Name</th> <th>Email</th> <th>Category</th> <th>Description</th> <th>Date</th>";
+	echo "</tr>";
+	while($row = $result->fetch_assoc()) {
+		echo "<tr>";
+		echo "<td>" . $row["ID"] . "</td>";
+		echo "<td>" . $row["name"] . "</td>";
+		echo "<td>" . $row["email"] . "</td>";
+		echo "<td>" . $row["category"] . "</td>";
+		echo "<td>" . $row["description"] . "</td>";
+		echo "<td>" . $row["date"] . "</td>";
+		echo "</tr>";
+  	}
+	echo "</table>";
+
+} else {
+  echo "0 results";
+}
+
+$conn->close();
+?>
+
+<h3>Records Management</h3>
+<form action="rdeinbookingdeletion.php" method="post">
+	<label for="deletion">Insert ID to delete:</label>
+	<input type="number" name="deletion" size="5">
+	<input type="submit" value="Delete" name="cmdDelete">
+</form>
+
+<form action="rdeinAdmin.php" method="post">
+	<p><input type="submit" value="Return" name="cmdBack"></p>
+</form>
+
+
+</body>
+</html>
