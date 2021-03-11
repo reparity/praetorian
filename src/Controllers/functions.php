@@ -6,9 +6,10 @@ use Slim\Http\Response; //namespace
 //include functionsProc.php file
 include __DIR__ . '/../Controllers/functionsProc.php';
 
-//read table agents
-$app->get('/agent/get', function (Request $request, Response $response, array $arg){
-    return $this->response->withJson(array('data' => 'success'), 200);
+//read table requests
+$app->get('/adminpage/get', function (Request $request, Response $response, array $arg){
+    $data = getAllRequests($this->db);
+    
 });
 
 //request table agents by condition
@@ -35,6 +36,21 @@ $app->post('/request/add', function ($request, $response, $args) {
     }
     return $this->response->withJson(array('add data'=> 'success'), 201);
 });
+
+//login
+$app->post('/auth', function ($request, $response, $args) {
+    $form_data = $request->getParsedBody();
+    $data = authCheck($this->db, $form_data);
+    if ($data <= 0) {
+        //return $this->renderer->render($response, "/../public/login.phtml");
+        $url = $this->router->pathFor('route.login', ['login']);
+        return $response->withStatus(302)->withHeader('Location', $url);
+    }
+    //return $this->renderer->render($response, "/../public/adminpage.phtml");
+    $url = $this->router->pathFor('route.admin', ['adminpage']);
+    return $response->withStatus(302)->withHeader('Location', $url);
+});
+
 
 /** all code below is unedited
  * do not use it

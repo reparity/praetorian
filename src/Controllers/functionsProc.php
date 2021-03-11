@@ -1,8 +1,8 @@
 <?php
 
-//get all agents
-function getAllAgents($db) {
-    $sql = 'Select * FROM agents';
+//get all requests
+function getAllRequests($db) {
+    $sql = 'Select * FROM requests';
     $stmt = $db->prepare($sql);
     $stmt ->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -19,7 +19,7 @@ function getAgent($db, $agentId) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-//add new requestt
+//add new request
 function createRequest($db, $form_data) {
     $sql = 'Insert into requests (name, email, category, description, date) ';
     $sql .= 'values (:name, :email, :category, :description, :date)';
@@ -35,6 +35,21 @@ function createRequest($db, $form_data) {
     return $db->lastInsertID(); //insert last number, continue
    // }
 }
+
+//auth check
+function authCheck($db, $form_data) {
+
+    $sql = "SELECT username, pass FROM admin WHERE username=:username and pass=:pass";
+    $stmt = $db->prepare ($sql);
+    $stmt->bindParam(':username', $form_data['username']);
+    $stmt->bindParam(':pass', $form_data['pass']);
+    $stmt->execute();
+    return $stmt->rowCount();
+
+}
+
+/**DO NOT TOUCH */
+
 
 //update existing record - insert ID by url
 function updateProduct($db, $productId, $form_data) {
