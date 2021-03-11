@@ -52,17 +52,5 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
-<h3>Records Management</h3>
-<form action="rdeinbookingdeletion.php" method="post">
-	<label for="deletion">Insert ID to delete:</label>
-	<input type="number" name="deletion" size="5">
-	<input type="submit" value="Delete" name="cmdDelete">
-</form>
-
-<form action="rdeinAdmin.php" method="post">
-	<p><input type="submit" value="Return" name="cmdBack"></p>
-</form>
-
-
 </body>
 </html>
