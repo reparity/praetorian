@@ -105,7 +105,7 @@ if ($result->num_rows > 0) {
 		echo "<td>" . $row["description"] . "</td>\n";
 		echo "<td>" . $row["date"] . "</td>\n";
 		echo "<td>" . $row["agent_name"] . "</td>\n";
-		echo "<td> <form action=\"adminpage/update/" . $row["req_id"] . "\" target=\"_blank\" method=\"post\">\n";
+		echo "<td> <form action=\"adminpage/update/" . $row["req_id"] . "\" method=\"post\">\n";
 		echo "<input type=\"hidden\" name=\"_METHOD\" value=\"PUT\"/>\n";
     	echo "<select name=\"a_name\">";
 		echo "<option value=\"0\">---No agent---</option>";
@@ -117,8 +117,8 @@ if ($result->num_rows > 0) {
    		echo "<option value=\"" . $a_row["id"] ."\">" . $a_row["name"] . "</option>";
 		}
 		echo "</select>";
-		echo "<button type=\"submit\" value=\"submit\">Update</button></form>";
-		echo "<td> <form action=\"adminpage/delete/" . $row["req_id"] . "\" target=\"_blank\" method=\"post\">\n";
+		echo "<button type=\"submit\" onClick=\"location.href=location.href\" value=\"submit\">Update</button></form>";
+		echo "<td> <form action=\"adminpage/delete/" . $row["req_id"] . "\" method=\"post\">\n";
 		echo "<input type=\"hidden\" name=\"_METHOD\" value=\"DELETE\"/>\n";
 		echo "<button type=\"submit\" value=\"submit\">Delete</button></form></td>\n";
 		echo "</tr>\n";
