@@ -1,8 +1,8 @@
 <?php
 
-//get all requests
-function getAllRequests($db) {
-    $sql = 'Select * FROM requests';
+//get all agents
+function getAllAgents($db) {
+    $sql = 'Select * FROM agents';
     $stmt = $db->prepare($sql);
     $stmt ->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -24,8 +24,6 @@ function createRequest($db, $form_data) {
     $sql = 'Insert into requests (name, email, category, description, date) ';
     $sql .= 'values (:name, :email, :category, :description, :date)';
     $stmt = $db->prepare ($sql);
-
-   // if(isset($form_data['price']) && isset($form_data['category_id'])) {
     $stmt->bindParam(':name', $form_data['name']);
     $stmt->bindParam(':email', $form_data['email']);
     $stmt->bindParam(':category', $form_data['category']);
@@ -46,6 +44,15 @@ function authCheck($db, $form_data) {
     $stmt->execute();
     return $stmt->rowCount();
 
+}
+
+//delete existing request
+function deleteRequest($db, $requestId) {
+    $sql = 'DELETE FROM requests WHERE id = :id';
+    $stmt = $db->prepare ($sql);
+    $id = (int) $requestId;
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
 }
 
 /**DO NOT TOUCH */

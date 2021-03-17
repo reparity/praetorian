@@ -6,14 +6,14 @@ use Slim\Http\Response; //namespace
 //include functionsProc.php file
 include __DIR__ . '/../Controllers/functionsProc.php';
 
-//read table requests
+//read table agents
 $app->get('/adminpage/get', function (Request $request, Response $response, array $arg){
-    $data = getAllRequests($this->db);
-    
+    $data = getAllAgents($this->db);
+    return $this->response->withJson(array('data' => $data), 200);
 });
 
 //request table agents by condition
-$app->get('/agent/[{id}]', function ($request, $response, $args){
+$app->get('/adminpage/agent/[{id}]', function ($request, $response, $args){
 
     $agentId = $args['id'];
     if (!is_numeric($agentId)) {
@@ -51,6 +51,19 @@ $app->post('/auth', function ($request, $response, $args) {
     return $response->withStatus(302)->withHeader('Location', $url);
 });
 
+//delete request
+$app->delete('/adminpage/delete/[{id}]', function ($request, $response, $args) {
+    $requestId = $args['id'];
+    $data = deleteRequest($this->db, $requestId);
+    if (!is_numeric($requestId)) {
+        return $this->response->withJson(array('error' => 'numeric parameter required'), 422);
+    }
+    $data = deleteRequest($this->db, $requestId);
+    if (empty($data)) {
+        return $this->response->withJson(array('delete' => 'success'), 200);
+    }
+    return $this->response->withJson(array('delete' => 'fail'), 404);
+});
 
 /** all code below is unedited
  * do not use it

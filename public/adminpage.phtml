@@ -1,17 +1,81 @@
 <!DOCTYPE html>
 <head>
-	<title>Rdein Lab</title>
-	<link rel="stylesheet" type="text/css" href="/../style.css" />
+	<title>Praetorian Admin Landing</title>
+	<style>
+		.logo {
+			text-align: center;
+			}
+		body {
+			background-color: #111b2e;
+			color: white;
+			}
+		.header {
+			text-align: center;
+			background-color: #404040;
+			border-radius: 7px;
+			max-width: 20%;
+			margin: auto;
+			}
+		.form {
+			margin: auto;
+			width: 50%;
+			}
+		input[type=button], input[type=submit], input[type=reset] {
+  			background-color: #ff9300;
+  			border: none;
+			border-radius: 7px;
+  			color: black;
+  			padding: 8px 14px;
+  			text-decoration: none;
+  			margin: 4px 2px;
+  			cursor: pointer;
+			}
+		input[type=submit]:hover {
+			background-color: #fcf800;
+			}
+		.content {
+			width: 80%;
+			margin: auto;
+			text-align: center;
+			}
+		th, td {
+			padding: 10px;
+			text-align: center;
+			}
+		table {
+			background-color: #404040;
+			border-collapse: collapse;
+			width: 100%;
+			}
+		th, tr, td {
+			border-left: 3px solid #1b1b1b;
+			border-right: 3px solid #1b1b1b;
+			}
+		tr:nth-child(even) {
+			background-color: #808080;
+			}
+		th {
+			background-color: #693374ce;
+			color: white;
+			}
+		button {
+			margin: auto;
+			background-color: #801b2c;
+  			border: none;
+			border-radius: 7px;
+  			color: white;
+  			padding: 8px 14px;
+  			text-decoration: none;
+  			margin: 4px 2px;
+  			cursor: pointer;
+		}
+	</style>
 </head>
 <body>
 
-<div class="header">
-	<h1>Rdein Laboratories</h1>
-	<img src="logo.png" height="187" width="300"></div>
+<?php include_once("navbar.php") ?>
 
-<div class="divider"></div>
-
-<h2>Booking Records</h2>
+<h2>Request List</h2>
 
 <?php
 $servername = "localhost";
@@ -25,26 +89,41 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT ID, name, email, category, description, date FROM requests";
+$sql = 'SELECT r.id AS req_id, r.name AS req_name, email, category, description, date, a.name AS agent_name FROM requests AS r JOIN agents AS a ON r.agent_id=a.id';
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
 
 	echo "<table><tr>";
-	echo "<th>ID</th> <th>Name</th> <th>Email</th> <th>Category</th> <th>Description</th> <th>Date</th>";
-	echo "</tr>";
+	echo "<th>Name</th> <th>Email</th> <th>Category</th> <th>Description</th> <th>Date</th> <th>Agent</th> <th>Update Agent</th> <th>Delete</th>";
+	echo "</tr>\n";
 	while($row = $result->fetch_assoc()) {
-		echo "<tr>";
-		echo "<td>" . $row["ID"] . "</td>";
-		echo "<td>" . $row["name"] . "</td>";
-		echo "<td>" . $row["email"] . "</td>";
-		echo "<td>" . $row["category"] . "</td>";
-		echo "<td>" . $row["description"] . "</td>";
-		echo "<td>" . $row["date"] . "</td>";
-		echo "</tr>";
+		echo "<tr>\n";
+		echo "<td>" . $row["req_name"] . "</td>\n";
+		echo "<td>" . $row["email"] . "</td>\n";
+		echo "<td>" . $row["category"] . "</td>\n";
+		echo "<td>" . $row["description"] . "</td>\n";
+		echo "<td>" . $row["date"] . "</td>\n";
+		echo "<td>" . $row["agent_name"] . "</td>\n";
+		echo "<td> <form action=\"adminpage/update/" . $row["req_id"] . "\" target=\"_blank\" method=\"post\">\n";
+		echo "<input type=\"hidden\" name=\"_METHOD\" value=\"PUT\"/>\n";
+    	echo "<select name=\"a_name\">";
+		echo "<option value=\"0\">---No agent---</option>";
+
+		$a_sql = "SELECT * FROM agents";
+		$a_result = $conn->query($a_sql);
+
+		while ($a_row = $a_result->fetch_assoc()) {
+   		echo "<option value=\"" . $a_row["id"] ."\">" . $a_row["name"] . "</option>";
+		}
+		echo "</select>";
+		echo "<button type=\"submit\" value=\"submit\">Update</button></form>";
+		echo "<td> <form action=\"adminpage/delete/" . $row["req_id"] . "\" target=\"_blank\" method=\"post\">\n";
+		echo "<input type=\"hidden\" name=\"_METHOD\" value=\"DELETE\"/>\n";
+		echo "<button type=\"submit\" value=\"submit\">Delete</button></form></td>\n";
+		echo "</tr>\n";
   	}
 	echo "</table>";
-
 } else {
   echo "0 results";
 }
