@@ -69,13 +69,17 @@
   			margin: 4px 2px;
   			cursor: pointer;
 		}
+		.buttonHolder {
+  			text-align: center;
+		}
+		button.addbutton {
+			padding: 8px 20px;
+		}
 	</style>
 </head>
 <body>
 
-<?php include_once("navbar.php") ?>
-
-<h2>Request List</h2>
+<?php include_once("navbar_admin.php") ?>
 
 <?php
 $servername = "localhost";
@@ -89,7 +93,9 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = 'SELECT r.id AS req_id, r.name AS req_name, email, category, description, date, a.name AS agent_name FROM requests AS r JOIN agents AS a ON r.agent_id=a.id';
+echo "<br /><h2 class=\"header\">Request List</h2><br />";
+
+$sql = 'SELECT r.id AS req_id, r.name AS req_name, r.email AS req_email, category, description, date, a.name AS agent_name FROM requests AS r JOIN agents AS a ON r.agent_id=a.id';
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -100,7 +106,7 @@ if ($result->num_rows > 0) {
 	while($row = $result->fetch_assoc()) {
 		echo "<tr>\n";
 		echo "<td>" . $row["req_name"] . "</td>\n";
-		echo "<td>" . $row["email"] . "</td>\n";
+		echo "<td>" . $row["req_email"] . "</td>\n";
 		echo "<td>" . $row["category"] . "</td>\n";
 		echo "<td>" . $row["description"] . "</td>\n";
 		echo "<td>" . $row["date"] . "</td>\n";
@@ -108,7 +114,6 @@ if ($result->num_rows > 0) {
 		echo "<td> <form action=\"adminpage/update/" . $row["req_id"] . "\" method=\"post\">\n";
 		echo "<input type=\"hidden\" name=\"_METHOD\" value=\"PUT\"/>\n";
     	echo "<select name=\"a_name\">";
-		echo "<option value=\"0\">---No agent---</option>";
 
 		$a_sql = "SELECT * FROM agents";
 		$a_result = $conn->query($a_sql);
@@ -127,6 +132,35 @@ if ($result->num_rows > 0) {
 } else {
   echo "0 results";
 }
+
+echo "<br /><h2 class=\"header\">Agent List</h2><br />";
+
+$sql = 'SELECT * FROM agents';
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+if ($result->num_rows > 0) {
+
+	echo "<table><tr>";
+	echo "<th>ID</th> <th>Name</th> <th>Email</th> <th>Location</th> <th>Delete</th>";
+	echo "</tr>\n";
+	while($row = $result->fetch_assoc()) {
+		echo "<tr>\n";
+		echo "<td>" . $row["id"] . "</td>\n";
+		echo "<td>" . $row["name"] . "</td>\n";
+		echo "<td>" . $row["email"] . "</td>\n";
+		echo "<td>" . $row["location"] . "</td>\n";
+
+		echo "<td> <form action=\"adminpage/agent/remove/" . $row["id"] . "\" method=\"post\">\n";
+		echo "<input type=\"hidden\" name=\"_METHOD\" value=\"DELETE\"/>\n";
+		echo "<button type=\"submit\" value=\"submit\">Delete</button></form></td>\n";
+		echo "</tr>\n";
+  	}
+	echo "</table>";
+} else {
+  echo "0 results";
+}
+
+include_once("adminadd.php");
 
 $conn->close();
 ?>

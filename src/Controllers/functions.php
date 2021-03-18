@@ -6,31 +6,22 @@ use Slim\Http\Response; //namespace
 //include functionsProc.php file
 include __DIR__ . '/../Controllers/functionsProc.php';
 
-//read table agents
-$app->get('/adminpage/get', function (Request $request, Response $response, array $arg){
-    $data = getAllAgents($this->db);
-    return $this->response->withJson(array('data' => $data), 200);
-});
-
-//request table agents by condition
-$app->get('/adminpage/agent/[{id}]', function ($request, $response, $args){
-
-    $agentId = $args['id'];
-    if (!is_numeric($agentId)) {
-        return $this->response->withJson(array('error' => 'numeric parameter required'), 422);
-    }
-    $data = getAgent($this->db, $agentId);
-    if (empty($data)) {
-        return $this->response->withJson(array('error' => 'no data'), 404);
-    }
-    return $this->response->withJson(array('data' => $data), 200);
-});
-
 //add request
 $app->post('/request/add', function ($request, $response, $args) {
     $form_data = $request->getParsedBody();
     var_dump($form_data);
     $data = createRequest($this->db, $form_data);
+    if ($data <= 0) {
+        return $this->response->withJson(array('error' => 'add data fail'), 500);
+    }
+    return $this->response->withJson(array('add data'=> 'success'), 201);
+});
+
+//add agent
+$app->post('/agent/add', function ($request, $response, $args) {
+    $form_data = $request->getParsedBody();
+    var_dump($form_data);
+    $data = createAgent($this->db, $form_data);
     if ($data <= 0) {
         return $this->response->withJson(array('error' => 'add data fail'), 500);
     }
@@ -77,6 +68,20 @@ $app->put('/adminpage/update/[{id}]', function ($request, $response, $args) {
         return $this->response->withJson(array('error' => 'update data fail'), 500);
     }
     return $this->response->withRedirect("/adminpage", 301);
+});
+
+//delete agent
+$app->delete('/adminpage/agent/remove/[{id}]', function ($request, $response, $args) {
+    $requestId = $args['id'];
+    $data = deleteAgent($this->db, $requestId);
+    if (!is_numeric($requestId)) {
+        return $this->response->withJson(array('error' => 'numeric parameter required'), 422);
+    }
+    $data = deleteAgent($this->db, $requestId);
+    if (empty($data)) {
+        return $this->response->withRedirect("/adminpage", 301);
+    }
+    return $this->response->withJson(array('delete' => 'fail'), 404);
 });
 
 ?>
